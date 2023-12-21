@@ -13,7 +13,13 @@ export function useQueueLocations() {
   const { data, error, isLoading } = useSWR<{ data: FHIRResponse }>(apiUrl, openmrsFetch);
 
   const queueLocations = useMemo(
-    () => data?.data?.entry?.map((response) => response.resource) ?? [],
+    () =>
+      data?.data?.entry
+        ?.map((response) => response.resource)
+        ?.sort(
+          // sort location names with case-insensitive option
+          (a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }),
+        ) ?? [],
     [data?.data?.entry],
   );
   return { queueLocations: queueLocations ? queueLocations : [], isLoading, error };

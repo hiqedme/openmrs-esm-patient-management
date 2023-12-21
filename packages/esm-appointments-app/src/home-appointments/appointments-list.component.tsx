@@ -100,11 +100,15 @@ const AppointmentsBaseTable = () => {
   const layout = useLayoutType();
   const { user } = useSession();
   const { t } = useTranslation();
-  const { useBahmniAppointmentsUI: useBahmniUI, useFullViewPrivilege, fullViewPrivilege } = useConfig();
+  const {
+    useBahmniAppointmentsUI: useBahmniUI,
+    useFullViewPrivilege,
+    fullViewPrivilege,
+    customPatientChartUrl,
+  } = useConfig<ConfigObject>();
   const { appointments, isLoading, mutate } = useTodaysAppointments();
 
   const fullView = userHasAccess(fullViewPrivilege, user) || !useFullViewPrivilege;
-  const { customPatientChartUrl } = useConfig<ConfigObject>();
 
   const filteredAppointments = !fullView
     ? appointments.filter((appointment) => appointment.status === 'Scheduled')

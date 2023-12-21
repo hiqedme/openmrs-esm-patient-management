@@ -1,8 +1,9 @@
 import useSWRImmutable from 'swr/immutable';
 import { type FetchResponse, openmrsFetch, useConfig } from '@openmrs/esm-framework';
+import { type ConfigObject } from '../config-schema';
 
 export function useServiceConcepts() {
-  const config = useConfig();
+  const config = useConfig<ConfigObject>();
   const {
     concepts: { serviceConceptSetUuid },
   } = config;

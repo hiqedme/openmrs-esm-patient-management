@@ -14,7 +14,7 @@ import styles from './appointments-list.scss';
 
 interface ActionMenuProps {
   appointment: MappedAppointment;
-  useBahmniUI?: string;
+  useBahmniUI?: boolean;
   mutate?: () => void;
 }
 

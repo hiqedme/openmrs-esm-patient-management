@@ -234,3 +234,17 @@ export async function deletePatientIdentifier(patientUuid: string, patientIdenti
     signal: abortController.signal,
   });
 }
+export const fetchPatientRecordFromClientRegistry = (
+  patientIdentifier: string,
+  identifierType: string,
+  country: string,
+) => {
+  const url = `
+  https://ngx.ampath.or.ke/registry/api/uno?uno=${patientIdentifier}&idType=${identifierType}&countryCode=${country}`;
+
+  return fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => data);
+};

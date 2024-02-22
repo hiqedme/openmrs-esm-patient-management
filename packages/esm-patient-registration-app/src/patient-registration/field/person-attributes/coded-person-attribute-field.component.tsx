@@ -31,7 +31,7 @@ export function CodedPersonAttributeField({
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (!answerConceptSetUuid) {
+    if (!answerConceptSetUuid && !customConceptAnswers.length) {
       reportError(
         t(
           'codedPersonAttributeNoAnswerSet',
@@ -41,10 +41,10 @@ export function CodedPersonAttributeField({
       );
       setError(true);
     }
-  }, [answerConceptSetUuid]);
+  }, [answerConceptSetUuid, customConceptAnswers]);
 
   useEffect(() => {
-    if (!isLoadingConceptAnswers) {
+    if (!isLoadingConceptAnswers && !customConceptAnswers.length) {
       if (!conceptAnswers) {
         reportError(
           t(
@@ -69,7 +69,7 @@ export function CodedPersonAttributeField({
         setError(true);
       }
     }
-  }, [isLoadingConceptAnswers, conceptAnswers]);
+  }, [isLoadingConceptAnswers, conceptAnswers, customConceptAnswers]);
 
   const answers = useMemo(() => {
     if (customConceptAnswers.length) {

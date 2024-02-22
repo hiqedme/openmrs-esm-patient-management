@@ -66,3 +66,8 @@ export const deleteIdentifierConfirmationModal = getAsyncLifecycle(
   () => import('./widgets/delete-identifier-confirmation-modal'),
   options,
 );
+
+export const patientIdentifierConfirmationModal = getAsyncLifecycle(
+  () => import('./widgets/patient-identifier-confirmation-modal'),
+  options,
+);

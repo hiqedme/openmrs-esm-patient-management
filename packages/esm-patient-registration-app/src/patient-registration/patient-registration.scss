@@ -112,3 +112,11 @@ html[dir='rtl'] {
     padding-right: spacing.$spacing-07;
   }
 }
+.patientVerification {
+  & > * {
+    margin-top: spacing.$spacing-05;
+  }
+  & > :last-child {
+    margin-top: spacing.$spacing-05;
+  }
+}

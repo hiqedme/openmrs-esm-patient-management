@@ -114,9 +114,9 @@ html[dir='rtl'] {
 }
 .patientVerification {
   & > * {
-    margin-top: spacing.$spacing-05;
+    margin-top: spacing.$spacing-03;
   }
   & > :last-child {
-    margin-top: spacing.$spacing-05;
+    margin-top: spacing.$spacing-03;
   }
 }

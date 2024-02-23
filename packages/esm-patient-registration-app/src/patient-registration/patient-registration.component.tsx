@@ -27,6 +27,7 @@ import { SectionWrapper } from './section/section-wrapper.component';
 import BeforeSavePrompt from './before-save-prompt';
 import styles from './patient-registration.scss';
 import { TextInput } from '@carbon/react';
+import { ClientRegistry } from '../patient-verification/client-registry.component';
 
 let exportedInitialFormValuesForTesting = {} as FormValues;
 
@@ -54,32 +55,6 @@ export const PatientRegistration: React.FC<PatientRegistrationProps> = ({ savePa
   const savePatientTransactionManager = useRef(new SavePatientTransactionManager());
   const fieldDefinition = config?.fieldDefinitions?.filter((def) => def.type === 'address');
   const validationSchema = getValidationSchema(config);
-  const [clientRegistryData, setClientRegistryData] = useState<{
-    country: string;
-    identifierType: string;
-    patientIdentifier: string;
-    isSubmitting: boolean;
-  }>({ country: 'KE', identifierType: '', patientIdentifier: '', isSubmitting: false });
-
-  const handleClientRegistryData = (data, key: 'country' | 'identifierType' | 'patientIdentifier') => {
-    setClientRegistryData({ ...clientRegistryData, [key]: data });
-  };
-
-  const handleClientRegistryDataSubmit = () => {
-    setClientRegistryData({ ...clientRegistryData, isSubmitting: true });
-    fetchPatientRecordFromClientRegistry(
-      clientRegistryData.patientIdentifier,
-      clientRegistryData.identifierType,
-      clientRegistryData.country,
-    ).then((res) => {
-      setClientRegistryData({ ...clientRegistryData, isSubmitting: false });
-      if (res.clientExists) {
-        const clientData = res.client;
-      } else {
-        const clientData = res.client;
-      }
-    });
-  };
 
   useEffect(() => {
     exportedInitialFormValuesForTesting = initialFormValues;
@@ -238,56 +213,7 @@ export const PatientRegistration: React.FC<PatientRegistrationProps> = ({ savePa
                   initialFormValues: props.initialValues,
                   setInitialFormValues,
                 }}>
-                <div className={styles.patientVerification}>
-                  <h2>Patient Verification</h2>
-                  <Dropdown
-                    id="default"
-                    titleText="Country"
-                    label="Select country"
-                    items={[
-                      { text: 'Kenya', id: 'KE' },
-                      { text: 'Uganda', id: 'UG' },
-                      { text: 'Tanzania', id: 'TZ' },
-                    ]}
-                    onChange={({ selectedItem }) => handleClientRegistryData(selectedItem?.id, 'country')}
-                    initialSelectedItem={{ text: 'Kenya', id: '1' }}
-                    itemToString={(item) => (item ? item.text : '')}
-                  />
-                  <Dropdown
-                    id="default"
-                    titleText="Verification ID Type"
-                    label="Select verification ID Type"
-                    items={[
-                      { text: 'National ID number', id: '58a47054-1359-11df-a1f1-0026b9348838' },
-                      { text: 'Passport number', id: 'ced014a1-068a-4a13-b6b3-17412f754af2' },
-                      { text: 'Birth Certificate Entry Number', id: '7924e13b-131a-4da8-8efa-e294184a1b0d' },
-                    ]}
-                    onChange={({ selectedItem }) => handleClientRegistryData(selectedItem?.id, 'identifierType')}
-                    itemToString={(item) => (item ? item.text : '')}
-                  />
-                  <TextInput
-                    disabled={clientRegistryData.identifierType === ''}
-                    onChange={(e) => handleClientRegistryData(e.target.value, 'patientIdentifier')}
-                    id="patientIdentifier"
-                    type="text"
-                    labelText="Patient identifier"
-                    placeholder="Enter patient identifier"
-                  />
-                  {clientRegistryData.isSubmitting ? (
-                    <InlineLoading
-                      description={`${t('searchRegistry', 'Searching registry')} ...`}
-                      iconDescription="searching registry ..."
-                      status="active"
-                    />
-                  ) : (
-                    <Button
-                      size="sm"
-                      disabled={clientRegistryData.isSubmitting || clientRegistryData.patientIdentifier === ''}
-                      onClick={() => handleClientRegistryDataSubmit()}>
-                      {t('searchRegistry', 'Search Registry')}
-                    </Button>
-                  )}
-                </div>
+                <ClientRegistry initialFormValues={initialFormValues} setInitialFormValues={setInitialFormValues} />
                 {sections.map((section, index) => (
                   <SectionWrapper
                     key={`registration-section-${section.id}`}

@@ -1,0 +1,20 @@
+@use '@carbon/type';
+@use '@carbon/colors';
+
+.cardContainer {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+  column-gap: 0.25rem;
+  margin: 0.5rem 0;
+}
+
+.label {
+  @include type.type-style('body-compact-02');
+  color: colors.$cool-gray-100;
+  font-weight: bold;
+}
+
+.value {
+  @include type.type-style('legal-01');
+  color: colors.$cool-gray-80;
+}

@@ -75,10 +75,6 @@ export const PatientRegistration: React.FC<PatientRegistrationProps> = ({ savePa
       setClientRegistryData({ ...clientRegistryData, isSubmitting: false });
       if (res.clientExists) {
         const clientData = res.client;
-        const confirmPatientIdentifierModal = showModal('patient-identifier-confirmation-modal', {
-          closeModal: () => cancelRegistration(),
-          clientData,
-        });
       } else {
         const clientData = res.client;
       }

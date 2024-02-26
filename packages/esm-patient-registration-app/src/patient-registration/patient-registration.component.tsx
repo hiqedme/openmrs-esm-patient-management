@@ -1,16 +1,23 @@
 import React, { useState, useEffect, useContext, useMemo, useRef } from 'react';
 import classNames from 'classnames';
-import { Button, Link, InlineLoading } from '@carbon/react';
+import { Button, Link, InlineLoading, Dropdown } from '@carbon/react';
 import { XAxis } from '@carbon/react/icons';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Formik, Form, type FormikHelpers } from 'formik';
-import { createErrorHandler, showSnackbar, useConfig, interpolateUrl, usePatient } from '@openmrs/esm-framework';
+import {
+  createErrorHandler,
+  showSnackbar,
+  useConfig,
+  interpolateUrl,
+  usePatient,
+  showModal,
+} from '@openmrs/esm-framework';
 import { getValidationSchema } from './validation/patient-registration-validation';
 import { type FormValues, type CapturePhotoProps } from './patient-registration.types';
 import { PatientRegistrationContext } from './patient-registration-context';
 import { type SavePatientForm, SavePatientTransactionManager } from './form-manager';
-import { usePatientPhoto } from './patient-registration.resource';
+import { fetchPatientRecordFromClientRegistry, usePatientPhoto, fetchPerson } from './patient-registration.resource';
 import { DummyDataInput } from './input/dummy-data/dummy-data-input.component';
 import { cancelRegistration, filterUndefinedPatientIdenfier, scrollIntoView } from './patient-registration-utils';
 import { useInitialAddressFieldValues, useInitialFormValues, usePatientUuidMap } from './patient-registration-hooks';
@@ -19,6 +26,8 @@ import { builtInSections, type RegistrationConfig, type SectionDefinition } from
 import { SectionWrapper } from './section/section-wrapper.component';
 import BeforeSavePrompt from './before-save-prompt';
 import styles from './patient-registration.scss';
+import { TextInput } from '@carbon/react';
+import { ClientRegistry } from '../patient-verification/client-registry.component';
 
 let exportedInitialFormValuesForTesting = {} as FormValues;
 
@@ -204,6 +213,7 @@ export const PatientRegistration: React.FC<PatientRegistrationProps> = ({ savePa
                   initialFormValues: props.initialValues,
                   setInitialFormValues,
                 }}>
+                <ClientRegistry initialFormValues={initialFormValues} setInitialFormValues={setInitialFormValues} />
                 {sections.map((section, index) => (
                   <SectionWrapper
                     key={`registration-section-${section.id}`}
@@ -225,3 +235,6 @@ export const PatientRegistration: React.FC<PatientRegistrationProps> = ({ savePa
  * Just exported for testing
  */
 export { exportedInitialFormValuesForTesting as initialFormValues };
+function dispose() {
+  throw new Error('Function not implemented.');
+}

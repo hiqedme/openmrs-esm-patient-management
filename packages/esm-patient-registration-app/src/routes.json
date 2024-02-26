@@ -57,6 +57,10 @@
       "name": "delete-identifier-confirmation-modal",
       "online": true,
       "offline": true
+    },
+    {
+      "name": "client-registry-modal",
+      "component": "clientRegistryModal"
     }
   ]
 }

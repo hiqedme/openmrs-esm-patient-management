@@ -6,6 +6,7 @@ import rootComponent from './root.component';
 import addPatientLinkComponent from './add-patient-link';
 import patientPhotoComponent from './widgets/display-photo.component';
 import editPatientDetailsButtonComponent from './widgets/edit-patient-details-button.component';
+import VerificationModal from './patient-verification/verification.component';
 
 export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
 
@@ -66,3 +67,5 @@ export const deleteIdentifierConfirmationModal = getAsyncLifecycle(
   () => import('./widgets/delete-identifier-confirmation-modal'),
   options,
 );
+
+export const clientRegistryModal = getSyncLifecycle(VerificationModal, options);

@@ -26,6 +26,7 @@ export function CodedPersonAttributeField({
   const { data: conceptAnswers, isLoading: isLoadingConceptAnswers } = useConceptAnswers(
     customConceptAnswers.length ? '' : answerConceptSetUuid,
   );
+
   const { t } = useTranslation();
   const fieldName = `attributes.${personAttributeType.uuid}`;
   const [error, setError] = useState(false);
